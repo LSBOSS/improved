@@ -1,0 +1,29 @@
+{
+  "name": "improved",
+  "version": "1.0.0",
+  "description": "Collection of useful node extensions to its standard library",
+  "scripts": {
+    "build": "tsc --watch || true",
+    "buildOnce": "tsc",
+    "lint": "tslint --format stylish --project .",
+    "prettier": "prettier --config node_modules/tslint-lt/.prettierrc.yml --write \"{,!node_modules/}**/*.{ts,tsx}\"",
+    "test": "npm run buildOnce && npm run lint && npm run prettier && node dist/tests/test.js",
+    "prepublish": "npm run buildOnce"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index",
+  "types": "dist/index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LSBOSS/improved.git"
+  },
+  "author": "LSBOSS",
+  "license": "All rights reserved.",
+  "devDependencies": {
+    "@types/node": "^10.1.0",
+    "tslint-lt": "^1.6.1",
+    "typescript": "^2.8.3"
+  }
+}
