@@ -3,7 +3,11 @@ const headers = new Headers()
 headers.append("Accept", "application/json, text/plain, */*")
 headers.append("Content-Type", "application/json")
 
-export default async function request(method: "get" | "post" | "put" | "delete", url: string, body?: {}) {
+export default async function request(
+  method: "get" | "post" | "put" | "delete",
+  url: string,
+  body?: {}
+) {
   const init = {
     method,
     headers,

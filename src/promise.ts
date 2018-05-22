@@ -1,3 +1,3 @@
-export const delay = (ms : number) => {
-  return new Promise(res => setTimeout(res, ms))
+export async function delay(ms: number) {
+  return new Promise<void>(res => setTimeout(res, ms))
 }
