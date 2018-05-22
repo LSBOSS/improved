@@ -1,6 +1,6 @@
 # improved
 
-[![Build Status](https://travis-ci.org/LSBOSS/improved.svg?branch=master)](https://travis-ci.org/LSBOSS/improved)
+[![Build Status](https://travis-ci.com/LSBOSS/improved.svg?branch=master)](https://travis-ci.com/LSBOSS/improved)
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
