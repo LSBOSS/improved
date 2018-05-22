@@ -20,9 +20,13 @@
     "url": "https://github.com/LSBOSS/improved.git"
   },
   "author": "LSBOSS",
-  "license": "All rights reserved.",
+  "contributors": [
+    "LSBOSS",
+    "ltetzlaff"
+  ],
+  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^10.1.0",
+    "@types/node": "^10.1.2",
     "tslint-lt": "^1.6.1",
     "typescript": "^2.8.3"
   }
