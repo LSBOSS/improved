@@ -1,9 +1,26 @@
-import { PathLike } from "fs"
+import { PathLike, Stats } from "fs"
 import { join, basename, dirname, extname } from "path"
 import fs from "./promisified"
 
+export async function unlink(path: PathLike) {
+  return fs.unlink(path)
+}
+
+export async function mkdir(path: PathLike) {
+  return fs.mkdir(path)
+}
+
 export async function exists(path: PathLike) {
   return fs.exists(path)
+}
+
+export async function stat(path: PathLike): Promise<Stats> {
+  return fs.stat(path)
+}
+
+export async function createIfDoesntExist(folder: string) {
+  if (await exists(folder)) return
+  return mkdir(folder)
 }
 
 export async function ls(path: PathLike, absolute = false): Promise<string[]> {
@@ -37,7 +54,7 @@ export function changeFileExtension(path: PathLike, newExtension: string) {
 }
 
 export async function read(
-  path: string,
+  path: PathLike,
   encoding: string = "utf8"
 ): Promise<string> {
   return (await fs.readFile(path, encoding ? { encoding } : {})).toString()
@@ -48,4 +65,22 @@ export async function read(
  */
 export async function readJSON<T>(path: string): Promise<T> {
   return JSON.parse(await read(path, "utf8")) as T
+}
+
+/** whitelist - what files to keep, defaults to /a^/ which matches nothing */
+export const clearFolder = async (folder: string, whitelist = /a^/) => {
+  const files = await ls(folder, true)
+  const deletionJobs = files.map(
+    async f => (whitelist.test(f) ? Promise.resolve() : unlink(f))
+  )
+  return Promise.all(deletionJobs)
+}
+
+export async function write(
+  path: string,
+  // tslint:disable-next-line:no-any
+  data: any,
+  encoding: string = "utf8"
+) {
+  return fs.writeFile(path, data.toString(), encoding ? { encoding } : {})
 }
