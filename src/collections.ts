@@ -25,7 +25,7 @@ function compareCollections<T>(
   const sets = collections.map(c => (c instanceof Set ? c : new Set(c)))
 
   const firstSet = sets.shift()
-  if (firstSet === undefined) return []
+  if (firstSet === undefined) return new Set<T>()
 
   return new Set([...firstSet].filter(i => cb(i, ...sets)))
 }
