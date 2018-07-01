@@ -7,14 +7,14 @@ export function union<T>(...collections: Collection<T>[]) {
 export function intersection<T>(...collections: Collection<T>[]) {
   return compareCollections(
     (i, ...sets) => sets.every(s => s.has(i)),
-    collections
+    ...collections
   )
 }
 
 export function difference<T>(...collections: Collection<T>[]) {
   return compareCollections(
     (i, ...sets) => sets.every(s => !s.has(i)),
-    collections
+    ...collections
   )
 }
 
