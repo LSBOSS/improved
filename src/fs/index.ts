@@ -1,13 +1,15 @@
-// Need to import URL for `exists` due to https://github.com/Microsoft/TypeScript/issues/9944
-import { URL } from "url"
+import { PathLike } from "fs"
 import { join } from "path"
 import fs from "./promisified"
 
-export const exists = fs.exists
+export async function exists(path: PathLike) {
+  return fs.exists(path)
+}
 
-export async function ls(path: string, absolute = false): Promise<string[]> {
+export async function ls(path: PathLike, absolute = false): Promise<string[]> {
   const files = await fs.readdir(path)
-  return absolute ? files.map(f => join(path, f)) : files
+  const pathStr = path.toString()
+  return absolute ? files.map(f => join(pathStr, f)) : files
 }
 
 export async function read(

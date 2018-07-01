@@ -1,7 +1,11 @@
-import cp from "./promisified"
-import { SpawnOptions } from "child_process"
+import cp, { SpawnOptions, ExecOptions } from "./promisified"
 
-export const exec = cp.exec
+export async function exec(
+  command: string,
+  options: ExecOptions & { encoding?: BufferEncoding | null }
+) {
+  return cp.exec(command, options)
+}
 
 export async function spawn(
   command: string,
