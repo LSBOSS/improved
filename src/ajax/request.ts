@@ -1,7 +1,9 @@
-// Requires browser, might consider adding node-fetch as dep
-const headers = new Headers()
-headers.append("Accept", "application/json, text/plain, */*")
-headers.append("Content-Type", "application/json")
+import "isomorphic-fetch"
+
+const headers = {
+  Accept: "application/json, text/plain, */*",
+  "Content-Type": "application/json"
+}
 
 export default async function request(
   method: "get" | "post" | "put" | "delete",
