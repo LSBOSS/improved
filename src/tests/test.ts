@@ -1,1 +1,3 @@
-import * as module from ".."
+import ajax from "./ajax.test"
+
+ajax()
