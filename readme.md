@@ -4,19 +4,23 @@
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-## Setup (in ./)
+## Install
 
-### Install NodeJS
+[NPM](https://www.npmjs.com/package/improved)
 
-[Download](https://nodejs.org/en/download/current/)
-
-### Fetch dependencies
 
 ```bash
-npm install
+npm i improved --save
 ```
 
 ## Dev (in ./)
+
+[Download NodeJS](https://nodejs.org/en/download/current/)
+
+Fetch dependencies
+```bash
+npm install
+```
 
 Typescript builds are automatic and watch for file changes:
 ```bash
@@ -32,10 +36,3 @@ Building, Linting, Formatting, Testing:
 ```bash
 npm test
 ```
-
-## Contribution
-
-- use `git pull --rebase` in favor of regular pull, i recommend configuring it globally via:
-  ```bash
-  git config --global pull.rebase true
-  ```
