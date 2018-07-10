@@ -9,6 +9,7 @@ const defaultHeaders = {
 export default async function request(
   method: "get" | "post" | "put" | "delete",
   url: string,
+  returnRawResponse: boolean,
   body?: {},
   customHeaders: IStringIndexed = {}
 ) {
@@ -20,5 +21,7 @@ export default async function request(
     },
     body: body ? JSON.stringify(body) : ""
   }
-  return (await fetch(url, init)).json()
+
+  const response = await fetch(url, init)
+  return returnRawResponse ? response : response.json()
 }
