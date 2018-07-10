@@ -8,16 +8,17 @@ export async function get(
   customHeaders?: IStringIndexed,
   returnRawResponse = false
 ) {
-  return request("get", url, returnRawResponse, undefined, customHeaders)
+  return request("get", url, returnRawResponse, undefined, false, customHeaders)
 }
 
 export async function post(
   url: string,
   body: {},
+  form = false,
   customHeaders?: IStringIndexed,
   returnRawResponse = false
 ) {
-  return request("post", url, returnRawResponse, body, customHeaders)
+  return request("post", url, returnRawResponse, body, form, customHeaders)
 }
 
 export async function del(
@@ -25,14 +26,22 @@ export async function del(
   customHeaders?: IStringIndexed,
   returnRawResponse = false
 ) {
-  return request("delete", url, returnRawResponse, undefined, customHeaders)
+  return request(
+    "delete",
+    url,
+    returnRawResponse,
+    undefined,
+    false,
+    customHeaders
+  )
 }
 
 export async function put(
   url: string,
   body: {},
+  form = false,
   customHeaders?: IStringIndexed,
   returnRawResponse = false
 ) {
-  return request("put", url, returnRawResponse, body, customHeaders)
+  return request("put", url, returnRawResponse, body, form, customHeaders)
 }
