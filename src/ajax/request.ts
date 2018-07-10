@@ -1,6 +1,7 @@
 import "isomorphic-fetch"
+import { IStringIndexed } from "../types"
 
-const headers = {
+const defaultHeaders = {
   Accept: "application/json, text/plain, */*",
   "Content-Type": "application/json"
 }
@@ -8,11 +9,15 @@ const headers = {
 export default async function request(
   method: "get" | "post" | "put" | "delete",
   url: string,
-  body?: {}
+  body?: {},
+  customHeaders: IStringIndexed = {}
 ) {
   const init = {
     method,
-    headers,
+    headers: {
+      ...defaultHeaders,
+      ...customHeaders
+    },
     body: body ? JSON.stringify(body) : ""
   }
   return (await fetch(url, init)).json()
