@@ -53,11 +53,28 @@ export function changeFileExtension(path: PathLike, newExtension: string) {
   return path.toString().replace(end, newExtension)
 }
 
+type Encoding =
+  | "ascii"
+  | "binary"
+  | "base64"
+  | "hex"
+  | "ucs2"
+  | "ucs-2"
+  | "utf16le"
+  | "utf-16le"
+  | "utf8"
+  | "utf-8"
+  | "latin1"
 export async function read(
   path: PathLike,
-  encoding: string = "utf8"
+  encoding: Encoding = "utf8"
 ): Promise<string> {
   return (await fs.readFile(path, encoding ? { encoding } : {})).toString()
+}
+
+export async function readBuffer(path: PathLike): Promise<Buffer> {
+  // tslint:disable-next-line:no-null-keyword
+  return fs.readFile(path, { encoding: null })
 }
 
 /**
