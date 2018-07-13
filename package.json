@@ -1,6 +1,6 @@
 {
   "name": "improved",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Collection of useful node extensions to its standard library",
   "scripts": {
     "build": "tsc --watch || true",
