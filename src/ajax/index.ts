@@ -13,7 +13,7 @@ export async function get(
 
 export async function post(
   url: string,
-  body: {},
+  body: {} | Blob,
   form = false,
   customHeaders?: IStringIndexed,
   returnRawResponse = false
@@ -38,7 +38,7 @@ export async function del(
 
 export async function put(
   url: string,
-  body: {},
+  body: {} | Blob,
   form = false,
   customHeaders?: IStringIndexed,
   returnRawResponse = false

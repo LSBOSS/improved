@@ -15,7 +15,7 @@ export default async function request(
   method: "get" | "post" | "put" | "delete",
   url: string,
   returnRawResponse: boolean,
-  body?: {},
+  body?: {} | Blob,
   form = false,
   customHeaders: IStringIndexed = {}
 ) {
@@ -26,7 +26,13 @@ export default async function request(
       ...(form ? formHeaders : {}),
       ...customHeaders
     },
-    body: body ? (form ? stringify(body) : JSON.stringify(body)) : undefined
+    body: body
+      ? form
+        ? stringify(body)
+        : body instanceof Blob
+          ? body
+          : JSON.stringify(body)
+      : undefined
   }
 
   const response = await fetch(url, init)
