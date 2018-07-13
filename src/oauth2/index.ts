@@ -27,7 +27,9 @@ export default class Oauth2 {
   private lastToken?: ITokenAnswer
   private fetchingToken?: Promise<ITokenAnswer>
 
-  constructor(private config: IOauth2Config) {
+  constructor(private config: IOauth2Config, lastToken?: ITokenAnswer) {
+    if (lastToken) this.lastToken = lastToken
+
     const basicAuth = Buffer.from(
       `${this.config.clientID}:${this.config.clientSecret}`
     ).toString("base64")
