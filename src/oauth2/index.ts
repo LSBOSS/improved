@@ -107,4 +107,48 @@ export default class Oauth2 {
       this.basicAuthHeaders
     ) as Promise<ITokenAnswer>
   }
+
+  private async getTokenAuthHeaders(): Promise<{ Authorization: string }> {
+    if (this.lastToken) {
+      return {
+        Authorization: `Bearer ${this.lastToken.access_token}`
+      }
+    } else {
+      await this.requestToken()
+      return this.getTokenAuthHeaders()
+    }
+  }
+
+  private async mergeHeaders(customHeaders?: IStringIndexed) {
+    const authHeaders = await this.getTokenAuthHeaders()
+
+    return {
+      ...authHeaders,
+      ...customHeaders
+    }
+  }
+
+  public async authenticatedGet(
+    url: string,
+    customHeaders?: IStringIndexed,
+    returnRawResponse = false
+  ) {
+    return get(url, await this.mergeHeaders(customHeaders), returnRawResponse)
+  }
+
+  public async authenticatedPost(
+    url: string,
+    body: {},
+    form = false,
+    customHeaders?: IStringIndexed,
+    returnRawResponse = false
+  ) {
+    return post(
+      url,
+      body,
+      form,
+      await this.mergeHeaders(customHeaders),
+      returnRawResponse
+    )
+  }
 }
