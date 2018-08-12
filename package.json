@@ -27,15 +27,15 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@types/isomorphic-fetch": "0.0.34",
     "@types/node": "^10.5.1",
+    "@types/node-fetch": "^2.1.2",
     "@types/query-string": "^6.1.0",
     "np": "^2.20.1",
     "tslint-lt": "^1.6.4",
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
+    "node-fetch": "^2.2.0",
     "query-string": "^6.1.0"
   }
 }

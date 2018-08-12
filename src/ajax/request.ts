@@ -1,4 +1,4 @@
-import "isomorphic-fetch"
+import "./node-fetch"
 import { IStringIndexed } from "../types"
 import { stringify } from "query-string"
 
