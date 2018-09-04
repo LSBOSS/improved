@@ -31,7 +31,8 @@
     "@types/node-fetch": "^2.1.2",
     "@types/query-string": "^6.1.0",
     "np": "^2.20.1",
-    "tslint-lt": "^1.6.4",
+    "tslint": "^5.11.0",
+    "tslint-lt": "^1.7.2",
     "typescript": "^2.9.2"
   },
   "dependencies": {
