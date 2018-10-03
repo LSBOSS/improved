@@ -1,4 +1,5 @@
 import cp, { SpawnOptions, ExecOptions } from "./promisified"
+import { ChildProcess } from "child_process"
 
 export async function exec(
   command: string,
@@ -12,5 +13,5 @@ export async function spawn(
   args?: ReadonlyArray<string>,
   options?: SpawnOptions
 ) {
-  return cp.spawn(command, args, options)
+  return cp.spawn(command, args, options) as Promise<ChildProcess>
 }
