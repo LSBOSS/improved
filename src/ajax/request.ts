@@ -11,6 +11,8 @@ const formHeaders = {
   "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
 }
 
+const supportsBlob = typeof window !== "undefined"
+
 export default async function request(
   method: "get" | "post" | "put" | "delete",
   url: string,
@@ -29,7 +31,7 @@ export default async function request(
     body: body
       ? form
         ? stringify(body)
-        : body instanceof Blob
+        : supportsBlob && body instanceof Blob
           ? body
           : JSON.stringify(body)
       : undefined
