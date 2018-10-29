@@ -1,6 +1,10 @@
-import { PathLike, Stats } from "fs"
+import { PathLike, Stats, existsSync, openSync, readSync } from "fs"
 import { join, basename, dirname, extname } from "path"
 import fs from "./promisified"
+
+const CHUNK_SIZE = 1048576    // yieldLinesFromFile is reading files in batches of this size
+const NEW_LINE = 0x0A
+const CARRIAGE_RETURN = 0x0D
 
 export async function unlink(path: PathLike) {
   return fs.unlink(path)
@@ -100,4 +104,45 @@ export async function write(
   encoding: string = "utf8"
 ) {
   return fs.writeFile(path, data.toString(), encoding ? { encoding } : {})
+}
+
+export function isEOL(value: number): boolean {
+  return value === NEW_LINE || value === CARRIAGE_RETURN
+}
+
+export function* yieldLinesFromFile(path: string): IterableIterator<string> {
+  const readBuffer = new Buffer(CHUNK_SIZE)
+
+  if (!existsSync(path)) {
+    throw new Error(`No such file or directory '${path}'`)
+  }
+
+  const fd = openSync(path, "r")
+
+  let readBytes = 0
+  let remainder = ""
+  let n = 0
+  do {
+    readBytes = readSync(fd, readBuffer, 0, CHUNK_SIZE, CHUNK_SIZE * n++)
+    let start = 0
+
+    for (let i = 0; i < readBytes; i++) {
+      if (isEOL(readBuffer[i])) {
+        const end = i
+        const line = remainder + readBuffer.slice(start, end).toString()
+        remainder = ""
+        yield line
+        i += readBuffer[i] === CARRIAGE_RETURN ? 1 : 0
+        start = i + 1
+      }
+    }
+
+    if (start !== readBytes) {
+      remainder = remainder + readBuffer.slice(start, readBytes).toString()
+    }
+  } while (readBytes > 0)
+
+  if (remainder !== "") {
+    yield remainder
+  }
 }
