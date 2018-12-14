@@ -22,6 +22,10 @@ export async function stat(path: PathLike): Promise<Stats> {
   return fs.stat(path)
 }
 
+export async function copy(src: PathLike, dst: PathLike) {
+  return fs.copy(src, dst)
+}
+
 export async function createIfDoesntExist(folder: string) {
   if (await exists(folder)) return
   return mkdir(folder)

@@ -1,4 +1,4 @@
-import { readdir, readFile, exists, mkdir, unlink, stat, writeFile } from "fs"
+import { readdir, readFile, exists, mkdir, unlink, stat, writeFile, copyFile } from "fs"
 import { promisify } from "util"
 
 export default {
@@ -8,5 +8,6 @@ export default {
   readFile: promisify(readFile),
   stat: promisify(stat),
   unlink: promisify(unlink),
-  writeFile: promisify(writeFile)
+  writeFile: promisify(writeFile),
+  copy: promisify(copyFile)
 }
