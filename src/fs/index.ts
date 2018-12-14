@@ -2,9 +2,9 @@ import { PathLike, Stats, existsSync, openSync, readSync } from "fs"
 import { join, basename, dirname, extname } from "path"
 import fs from "./promisified"
 
-const CHUNK_SIZE = 1048576    // yieldLinesFromFile is reading files in batches of this size
-const NEW_LINE = 0x0A
-const CARRIAGE_RETURN = 0x0D
+const CHUNK_SIZE = 1048576 // yieldLinesFromFile is reading files in batches of this size
+const NEW_LINE = 0x0a
+const CARRIAGE_RETURN = 0x0d
 
 export async function unlink(path: PathLike) {
   return fs.unlink(path)
@@ -95,8 +95,8 @@ export async function readJSON<T>(path: string): Promise<T> {
 /** whitelist - what files to keep, defaults to /a^/ which matches nothing */
 export const clearFolder = async (folder: string, whitelist = /a^/) => {
   const files = await ls(folder, true)
-  const deletionJobs = files.map(
-    async f => (whitelist.test(f) ? Promise.resolve() : unlink(f))
+  const deletionJobs = files.map(async f =>
+    whitelist.test(f) ? Promise.resolve() : unlink(f)
   )
   return Promise.all(deletionJobs)
 }

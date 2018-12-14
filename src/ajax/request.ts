@@ -32,8 +32,8 @@ export default async function request(
       ? form
         ? stringify(body)
         : supportsBlob && body instanceof Blob
-          ? body
-          : JSON.stringify(body)
+        ? body
+        : JSON.stringify(body)
       : undefined
   }
 
