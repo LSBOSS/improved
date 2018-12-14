@@ -1,4 +1,4 @@
-import { PathLike, Stats, existsSync, openSync, readSync } from "fs"
+import { PathLike, Stats, existsSync, openSync, readSync, constants } from "fs"
 import { join, basename, dirname, extname } from "path"
 import fs from "./promisified"
 
@@ -22,8 +22,20 @@ export async function stat(path: PathLike): Promise<Stats> {
   return fs.stat(path)
 }
 
-export async function copy(src: PathLike, dst: PathLike) {
-  return fs.copy(src, dst)
+export async function copy(
+  src: PathLike,
+  dst: PathLike,
+  throwIfExists: boolean
+) {
+  return fs.copy(src, dst, throwIfExists ? constants.COPYFILE_EXCL : undefined)
+}
+
+export async function symlink(
+  src: string,
+  linkPath: string,
+  type?: "dir" | "file" | "junction"
+) {
+  return fs.symlink(src, linkPath, type)
 }
 
 export async function createIfDoesntExist(folder: string) {

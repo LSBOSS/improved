@@ -6,17 +6,19 @@ import {
   unlink,
   stat,
   writeFile,
-  copyFile
+  copyFile,
+  symlink
 } from "fs"
-import { promisify } from "util"
+import { promisify as p } from "util"
 
 export default {
-  exists: promisify(exists),
-  mkdir: promisify(mkdir),
-  readdir: promisify(readdir),
-  readFile: promisify(readFile),
-  stat: promisify(stat),
-  unlink: promisify(unlink),
-  writeFile: promisify(writeFile),
-  copy: promisify(copyFile)
+  exists: p(exists),
+  mkdir: p(mkdir),
+  readdir: p(readdir),
+  readFile: p(readFile),
+  stat: p(stat),
+  unlink: p(unlink),
+  writeFile: p(writeFile),
+  copy: p(copyFile),
+  symlink: p(symlink)
 }
