@@ -2,6 +2,8 @@ import "./node-fetch"
 import { IStringIndexed } from "../types"
 import { stringify } from "query-string"
 
+export type HTTPMethod = "get" | "post" | "put" | "delete"
+
 const defaultHeaders = {
   Accept: "application/json, text/plain, */*",
   "Content-Type": "application/json"
@@ -14,13 +16,12 @@ const formHeaders = {
 const supportsBlob = typeof window !== "undefined"
 
 export default async function request(
-  method: "get" | "post" | "put" | "delete",
+  method: HTTPMethod,
   url: string,
-  returnRawResponse: boolean,
   body?: {} | Blob,
   form = false,
   customHeaders: IStringIndexed = {}
-) {
+): Promise<Response> {
   const init = {
     method,
     headers: {
@@ -37,6 +38,5 @@ export default async function request(
       : undefined
   }
 
-  const response = await fetch(url, init)
-  return returnRawResponse ? response : response.json()
+  return fetch(url, init)
 }
