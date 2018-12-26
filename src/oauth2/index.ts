@@ -1,5 +1,5 @@
 import { stringify } from "query-string"
-import { post, get } from "../ajax"
+import { post, get, request } from "../ajax"
 import { IStringIndexed } from "../types"
 
 export interface ITokenAnswer {
@@ -42,6 +42,17 @@ export default class Oauth2 {
     }
   }
 
+  private async postTokenRequest(form: {}): Promise<ITokenAnswer> {
+    const result = (await request(
+      "post",
+      this.config.tokenURL,
+      form,
+      true,
+      this.basicAuthHeaders
+    )).json()
+    return result
+  }
+
   /**
    * @throws RefreshTokenExpiredError if no refreshToken has expired and no `code` param is given
    */
@@ -56,12 +67,7 @@ export default class Oauth2 {
       grant_type: "authorization_code"
     }
 
-    this.fetchingToken = post(
-      this.config.tokenURL,
-      form,
-      true,
-      this.basicAuthHeaders
-    ) as Promise<ITokenAnswer>
+    this.fetchingToken = this.postTokenRequest(form)
 
     try {
       const tokenAnswer = await this.fetchingToken
@@ -105,12 +111,7 @@ export default class Oauth2 {
       refresh_token: refreshToken
     }
 
-    return post(
-      this.config.tokenURL,
-      form,
-      true,
-      this.basicAuthHeaders
-    ) as Promise<ITokenAnswer>
+    return this.postTokenRequest(form)
   }
 
   private async getTokenAuthHeaders(): Promise<{ Authorization: string }> {
@@ -133,27 +134,16 @@ export default class Oauth2 {
     }
   }
 
-  public async authenticatedGet(
-    url: string,
-    customHeaders?: IStringIndexed,
-    returnRawResponse = false
-  ) {
-    return get(url, await this.mergeHeaders(customHeaders), returnRawResponse)
+  public async authenticatedGet(url: string, customHeaders?: IStringIndexed) {
+    return get(url, await this.mergeHeaders(customHeaders))
   }
 
   public async authenticatedPost(
     url: string,
     body: {},
     form = false,
-    customHeaders?: IStringIndexed,
-    returnRawResponse = false
+    customHeaders?: IStringIndexed
   ) {
-    return post(
-      url,
-      body,
-      form,
-      await this.mergeHeaders(customHeaders),
-      returnRawResponse
-    )
+    return post(url, body, form, await this.mergeHeaders(customHeaders))
   }
 }
