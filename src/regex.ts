@@ -1,9 +1,6 @@
 export function all(re: RegExp, str: string) {
   if (!re.global) {
-    console.info(
-      "Executing regex.all on regex without global flag, falling back to regex.single"
-    )
-    return single(re, str)
+    throw new Error("Executing regex.all on regex without global flag")
   }
 
   let exec = re.exec(str)
@@ -20,7 +17,7 @@ export function all(re: RegExp, str: string) {
 
 export function single(re: RegExp, str: string) {
   const exec = re.exec(str)
-  if (!exec) return undefined
+  if (!exec) return []
 
   const [, ...captures] = exec
   return captures
